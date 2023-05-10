@@ -1,0 +1,23 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model FileMaster
+@{
+}
+<div class="container">
+    <div class="card-header">
+        <div class="card-title">Insert File</div>
+    </div>
+    <div class="card-body">
+        <div class="">
+            <label asp-for="@Model.FileNumber">File Number</label>
+            <div class="mt-lg-1">
+                <input class="input-group" asp-for="@Model.FileNumber" placeholder="File.." asp-area="" />
+            </div>
+
+        </div>
+       
+    </div>
+
+</div>
+
