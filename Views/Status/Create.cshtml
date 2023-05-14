@@ -1,0 +1,68 @@
+﻿@model StatusMaster
+@{
+    var successMessage = TempData["SuccessMessage"] as string;
+    var errorMessage = TempData["ErrorMessage"] as string;
+}
+
+<div class="container">
+    <div class="row col-6">
+        <div class="card">
+            <div class="card-header primary">
+                <div class="card-title">Insert File</div>
+            </div>
+            <form asp-action="Create" asp-controller="Status">
+                <div class="card-body">
+                    <div class="form-group">
+                      <lable>StatusName</lable>
+                        <input type="text" id="StatusName" asp-for="@Model.StatusName" placeholder="Status.." class="form-control" asp-area="" />
+                    </div>
+                    <div class="form-group">
+                        <lable>StatusType</lable>
+                        <select name="StatusType" id="StatusType" class="form-control" asp-for="@Model.StatusType">
+                            <option value="--Select--">--Select--</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Completed">Unactioned</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                    <div class="">
+                        @if (!string.IsNullOrEmpty(successMessage))
+                        {
+                            <div class="success-message" id="myMessage" data-message="@successMessage" style="color:green">
+                                @successMessage
+                            </div>
+                        }
+
+                        @if (!string.IsNullOrEmpty(errorMessage))
+                        {
+                            <div class="error-message" id="myMessage" data-message="@errorMessage" style="color:red">
+                                @errorMessage
+                            </div>
+                        }
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+    var message = document.getElementById('myMessage').getAttribute('data-message');
+         // Output: Hello, world!
+        if (message == "Status is added successfully")
+        {
+            alert(message);
+        }
+        else
+        {
+            alert(message);
+        }
+        document.getElementById("StatusName").value = "";
+        document.getElementById("StatusType").value = "--Select--";
+    </script>
+    
+}

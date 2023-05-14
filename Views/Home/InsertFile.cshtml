@@ -5,19 +5,51 @@
 @{
 }
 <div class="container">
-    <div class="card-header">
-        <div class="card-title">Insert File</div>
-    </div>
-    <div class="card-body">
-        <div class="">
-            <label asp-for="@Model.FileNumber">File Number</label>
-            <div class="mt-lg-1">
-                <input class="input-group" asp-for="@Model.FileNumber" placeholder="File.." asp-area="" />
+    <div class="row col-6">
+        <div class="card">
+            <div class="card-header primary">
+                <div class="card-title">Insert File</div>
             </div>
+            <form asp-action="Insertfile" asp-controller="Home">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label asp-for="@Model.FileNumber">File Number</label>
+                        <input type="text" asp-for="@Model.FileNumber" placeholder="File.." class="form-control" asp-area="" />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label asp-for="@Model.Container">Container No</label>
+                        <input type="text" asp-for="@Model.Container" placeholder="Container.." class="form-control" asp-area="" />
+                    </div>
 
+                    <div class="form-group">
+                        <label asp-for="@Model.Eta">Eta</label>
+                        <input type="date" asp-for="@Model.Eta" placeholder="Eta.." class="form-control" asp-area="" />
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.DrafCutOff">Draft Cut Off</label>
+                        <input type="date" asp-for="@Model.DrafCutOff" placeholder="Draft cut off.." class="form-control" asp-area="" />
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.HblCount">HBL Count</label>
+                        <input type="number" asp-for="@Model.HblCount" placeholder="Hbl count.." class="form-control" asp-area="" />
+                    </div>
+                    <div class="form-group">
+                        <lable >Country</lable>
+                        <select name="Country" class="form-control" asp-items="@(new SelectList(ViewBag.CountryList, "Id", "CountyName"))">
+                            <option value="Select">--Select--</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+            </form>
         </div>
-       
     </div>
+
 
 </div>
 

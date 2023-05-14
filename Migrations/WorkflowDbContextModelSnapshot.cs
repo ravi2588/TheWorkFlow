@@ -222,9 +222,8 @@ namespace TheWorkFlow.Migrations
 
             modelBuilder.Entity("TheWorkFlow.Models.ActivityMaster", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ActivityType")
                         .IsRequired()
@@ -245,9 +244,8 @@ namespace TheWorkFlow.Migrations
 
             modelBuilder.Entity("TheWorkFlow.Models.CountryMaster", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CountryCode")
                         .IsRequired()
@@ -264,12 +262,12 @@ namespace TheWorkFlow.Migrations
 
             modelBuilder.Entity("TheWorkFlow.Models.FileActivityLog", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid>("ActivityId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("ActivityId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
@@ -280,14 +278,16 @@ namespace TheWorkFlow.Migrations
                     b.Property<DateTime?>("Eta")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("FileId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("FileId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("StartDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("StatusId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("StatusId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -302,9 +302,8 @@ namespace TheWorkFlow.Migrations
 
             modelBuilder.Entity("TheWorkFlow.Models.FileActivityLogHistory", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ActivityId")
                         .HasColumnType("nvarchar(max)");
@@ -335,33 +334,39 @@ namespace TheWorkFlow.Migrations
 
             modelBuilder.Entity("TheWorkFlow.Models.FileMaster", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Country")
+                    b.Property<string>("Container")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CountryId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DrafCutOff")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Eta")
+                    b.Property<DateTime?>("Eta")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("EtachangedBy")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FileNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("HblCount")
+                    b.Property<int?>("HblCount")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("PriviousEta")
+                    b.Property<DateTime?>("PriviousEta")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("StatusId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -370,13 +375,12 @@ namespace TheWorkFlow.Migrations
 
             modelBuilder.Entity("TheWorkFlow.Models.HBLActivityLog", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<Guid?>("ActivityId")
+                    b.Property<string>("ActivityId")
                         .IsRequired()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
@@ -384,8 +388,8 @@ namespace TheWorkFlow.Migrations
                     b.Property<DateTime>("EndDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("HBLMasterId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("HBLMasterId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("HblId")
                         .IsRequired()
@@ -394,9 +398,9 @@ namespace TheWorkFlow.Migrations
                     b.Property<DateTime>("StartDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("StatusId")
+                    b.Property<string>("StatusId")
                         .IsRequired()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -443,16 +447,16 @@ namespace TheWorkFlow.Migrations
 
             modelBuilder.Entity("TheWorkFlow.Models.HBLMaster", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Booking")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("FileId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("FileId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("HBLNumber")
                         .IsRequired()
@@ -467,9 +471,8 @@ namespace TheWorkFlow.Migrations
 
             modelBuilder.Entity("TheWorkFlow.Models.StatusMaster", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");

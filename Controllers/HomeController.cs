@@ -45,7 +45,7 @@ namespace TheWorkFlow.Controllers
         [HttpGet]
         public IActionResult InsertFile()
         {
-
+            ViewBag.CountryList=_context.CountryMaster.ToList();
             return View();
         }
 

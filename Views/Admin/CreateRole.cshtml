@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+
+@model IdentityRole
+
+
+<div class="container">
+    <form asp-action="CreateRole" asp-controller="Admin" method="post">
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">Creaate Role</div>
+        </div>
+        <div class="card-body">
+            
+                <div class="form-control">
+                    <label class="input-group" Name="Name"> Name of Role</label>
+                    <div> <input type="text" name="Name" placeholder="Role Name" required></div>
+                </div>
+                <div class="form-control">
+                    <button type="submit">Submit</button>
+                </div> 
+           
+        </div>
+        <div class="card-footer"></div>
+    </div>
+    </form>
+</div>

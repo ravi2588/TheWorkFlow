@@ -15,13 +15,15 @@ namespace TheWorkFlow.Controllers
         private readonly IConfiguration _config;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly WorkflowDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;    
-        public AccountController(IConfiguration configuration, SignInManager<IdentityUser> signInManager, WorkflowDbContext context, UserManager<IdentityUser> userManager)
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public AccountController(IConfiguration configuration, SignInManager<IdentityUser> signInManager, WorkflowDbContext context, UserManager<IdentityUser> userManager,RoleManager<IdentityRole> roleManager)
         {
             _config = configuration;
             _signInManager = signInManager;
             _context=context;
-            _userManager=userManager;       
+            _userManager=userManager;    
+            _roleManager=roleManager;
         }
         public IActionResult Index()
         {
@@ -33,7 +35,7 @@ namespace TheWorkFlow.Controllers
         public IActionResult Login(string returnUrl = null)
         {
             _signInManager.SignOutAsync();
-            ViewData["ReturnUrl"] = "/";
+            ViewData["ReturnUrl"] = "/Login";
             return View();
         }
 
@@ -41,11 +43,6 @@ namespace TheWorkFlow.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl )
         {
-            
-
-
-
-
 
 
 
@@ -54,7 +51,7 @@ namespace TheWorkFlow.Controllers
                 // Handle invalid returnUrl here, such as redirecting to a default page
                 returnUrl = null;
             }
-            returnUrl="/";
+            returnUrl="/Login";
             ViewData["ReturnUrl"] = returnUrl;
 
             if (ModelState.IsValid)
@@ -115,7 +112,7 @@ namespace TheWorkFlow.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction(nameof(HomeController.Index), "Home");
+            return RedirectToAction("Login", "Acount");
         }
 
         private IActionResult RedirectToLocal(string returnUrl)
@@ -126,7 +123,7 @@ namespace TheWorkFlow.Controllers
             }
             else
             {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction("Index", "Home");
             }
         }
 
@@ -134,6 +131,7 @@ namespace TheWorkFlow.Controllers
         [HttpGet]
         public IActionResult Register()
         {
+            ViewBag.Roles=_context.Roles.ToList();
             return View();
         }
 
@@ -143,20 +141,57 @@ namespace TheWorkFlow.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = model.UserName, Email = model.Email };
+                IdentityUser user = new IdentityUser { UserName = model.UserName, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
+
+                var roles=await _userManager.GetRolesAsync(user);
+
+                var userdata = await _userManager.FindByIdAsync(user.Id);
+
+                var userdetail = await _userManager.FindByNameAsync(model.UserName);
+
+      
 
                 if (result.Succeeded)
                 {
+                    if (user != null)
+                    {
+                        var role = await _roleManager.FindByIdAsync(model.RoleId);
+                        if (role != null)
+                        {
+                            var addrole = await _userManager.AddToRoleAsync(user, role.Name);
+                            if (addrole.Succeeded)
+                            {
+                                return RedirectToAction("Index", "Home"); // Redirect to a success page or any other desired action
+                            }
+                            else
+                            {
+                                foreach (var error in result.Errors)
+                                {
+                                    ModelState.AddModelError("", error.Description);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "Role not found.");
+                        }
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "User not found.");
+                    }
+
+
+
                     // If registration is successful, you can choose to sign in the user automatically
                     // or redirect to a confirmation page where the user can confirm their email, etc.
 
                     // Option 1: Automatically sign in the user
                     // await _signInManager.SignInAsync(user, isPersistent: false);
                     // return RedirectToAction("Index", "Home");
-
                     // Option 2: Redirect to a confirmation page
-                    return RedirectToAction("RegistrationConfirmation", "Account");
+                    return RedirectToAction("Login", "Account");
                 }
 
                 foreach (var error in result.Errors)
