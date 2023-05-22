@@ -112,7 +112,7 @@ namespace TheWorkFlow.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Login", "Acount");
+            return RedirectToAction("Login", "Account");
         }
 
         private IActionResult RedirectToLocal(string returnUrl)

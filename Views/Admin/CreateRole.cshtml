@@ -1,27 +1,62 @@
 ﻿@using Microsoft.AspNetCore.Identity
 
-
 @model IdentityRole
+@{
+    var successMessage = TempData["SuccessMessage"] as string;
+    var errorMessage = TempData["ErrorMessage"] as string;
+}
 
 
 <div class="container">
     <form asp-action="CreateRole" asp-controller="Admin" method="post">
-    <div class="card">
+        <div class="card " style="max-width: 500px;">
         <div class="card-header">
-            <div class="card-title">Creaate Role</div>
+            <label class="card-title">Create Role</label>
         </div>
         <div class="card-body">
-            
-                <div class="form-control">
-                    <label class="input-group" Name="Name"> Name of Role</label>
-                    <div> <input type="text" name="Name" placeholder="Role Name" required></div>
+                <div class="form-group">
+                    <label>Role Name</label>
+                    <input class="form-control" id="RoleName" asp-for="@Model.Name" placeholder="Role Name.." asp-area="" />
                 </div>
-                <div class="form-control">
-                    <button type="submit">Submit</button>
+               
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div> 
            
         </div>
-        <div class="card-footer"></div>
+        
     </div>
     </form>
+    <div class="">
+        @if (!string.IsNullOrEmpty(successMessage))
+        {
+            <div class="success-message" id="myMessage" data-message="@successMessage" style="color:green" hidden>
+                @successMessage
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="error-message" id="myMessage" data-message="@errorMessage" style="color:red" hidden>
+                @errorMessage
+            </div>
+        }
+    </div>
 </div>
+@section Scripts
+    {
+    <script>
+        var message = document.getElementById('myMessage').getAttribute('data-message');
+        // Output: Hello, world!
+        if (message == "Role is added successfully") {
+           
+            toastr.success(message);
+        }
+        else {
+            toastr.error(message);
+        }
+        document.getElementById("RoleName").value = "";
+     
+    </script>
+
+}

@@ -7,12 +7,18 @@ namespace TheWorkFlow.Controllers
     public class ActivityController : Controller
     {
         WorkflowDbContext _context;
+        public ActivityController(WorkflowDbContext context)
+        {
+            _context=context;
+        }
         public IActionResult Index()
         {
             return View();
         }
         public IActionResult Create()
         {
+            TempData["SuccessMessage"]="";
+            TempData["ErrorMessage"]="";
             return View();
 
         

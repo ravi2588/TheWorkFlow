@@ -3,25 +3,63 @@
 *@
 @model CountryMaster
 @{
+    var successMessage = TempData["SuccessMessage"] as string;
+    var errorMessage = TempData["ErrorMessage"] as string;
 }
 <div class="container">
     <form asp-action="create" asp-controller="Country" method="post">
-        <div class="card">
+        <div class="card" style="max-width: 500px;">
             <div class="card-header">
-                <div class="card-title">Creaate Country</div>
+                <label class="card-title">Country Master</label>
             </div>
             <div class="card-body">
-                <div class="row col-6">
+                <div class="row ">
                     <div class="form-group">
                         <label asp-for="CountryName">Name of Country</label>
-                        <input class="form-control" asp-for="CountryName" type="text" />
+                        <input class="form-control" id="CountryName" asp-for="CountryName" type="text" />
                     </div>
                     <div class="form-group">
-                        <button class="form-control" type="submit">Submit</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </div>
             </div>
-            <div class="card-footer"></div>
+           
         </div>
     </form>
+    <div class="">
+        @if (!string.IsNullOrEmpty(successMessage))
+        {
+            <div class="success-message" id="myMessage" data-message="@successMessage" style="color:green" hidden>
+                @successMessage
+            </div>
+        }
+
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="error-message" id="myMessage" data-message="@errorMessage" style="color:red" hidden>
+                @errorMessage
+            </div>
+        }
+    </div>
 </div>
+@section Scripts
+    {
+    <script>
+        var message = document.getElementById('myMessage').getAttribute('data-message');
+        // Output: Hello, world!
+        if (message == "Country is added successfully") {
+            toastr.success(message);
+            setTimeout(new funcation(){
+            }, 5000);
+        }
+        else {
+            toastr.warning(message);
+            setTimeout(new funcation(){
+            },5000);
+        }
+        document.getElementById("CountryName").value = "";
+    
+    </script>
+
+}
+

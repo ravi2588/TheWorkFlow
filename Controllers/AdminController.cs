@@ -25,24 +25,40 @@ namespace TheWorkFlow.Controllers
         }
         public IActionResult CreateRole()
         {
-            
+            TempData["SuccessMessage"]="";
+            TempData["ErrorMessage"]="";
+
             return View();
         }
         [HttpPost]
         public  async Task<IActionResult> CreateRole(IdentityRole role)
         {
-
-
-            var roleExists = await _roleManager.RoleExistsAsync(role.Name);
-            if (!roleExists)
+            try
             {
-                var newRole = new IdentityRole(role.Name);
-                var result = await _roleManager.CreateAsync(newRole);
-                if (result.Succeeded)
+                var roleExists = await _roleManager.RoleExistsAsync(role.Name);
+                if (!roleExists)
                 {
-                    return RedirectToAction("Index", "Home"); // Redirect to a success page or any other desired action
+                    var newRole = new IdentityRole(role.Name);
+                    var result = await _roleManager.CreateAsync(newRole);
+                    if (result.Succeeded)
+                    {
+                        //return RedirectToAction("Index", "Home"); // Redirect to a success page or any other desired action
+                    }
+                    TempData["SuccessMessage"]="Role is added successfully";
                 }
+                else
+                {
+                    TempData["ErrorMessage"]="Role is already exits";
+                }
+
             }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"]=ex.Message;
+            }
+
+
+           
         
             return View();
         }

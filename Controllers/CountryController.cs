@@ -35,13 +35,14 @@ namespace TheWorkFlow.Controllers
                     }; 
                     _context.CountryMaster.Add(country);
                     _context.SaveChanges();
+                    TempData["SuccessMessage"]="Country is added successfully";
                 }
 
             }
             catch (Exception ex)
             {
 
-                
+                TempData["ErrorMessage"]=ex.Message;
             }
             return View(countryMaster);
 

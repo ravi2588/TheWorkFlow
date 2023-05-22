@@ -19,6 +19,8 @@ namespace TheWorkFlow.Controllers
 
         public IActionResult Create()
         {
+            TempData["SuccessMessage"]="";
+            TempData["ErrorMessage"]="";
             return View();    
         }
         [HttpPost]

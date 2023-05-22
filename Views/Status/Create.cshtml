@@ -5,19 +5,19 @@
 }
 
 <div class="container">
-    <div class="row col-6">
-        <div class="card">
+
+    <div class="card" style="max-width: 500px;">
             <div class="card-header primary">
-                <div class="card-title">Insert File</div>
+                <label class="card-title">Status Master</label>
             </div>
             <form asp-action="Create" asp-controller="Status">
                 <div class="card-body">
                     <div class="form-group">
-                      <lable>StatusName</lable>
+                      <label>Status Name</label>
                         <input type="text" id="StatusName" asp-for="@Model.StatusName" placeholder="Status.." class="form-control" asp-area="" />
                     </div>
                     <div class="form-group">
-                        <lable>StatusType</lable>
+                        <label>Status Type</label>
                         <select name="StatusType" id="StatusType" class="form-control" asp-for="@Model.StatusType">
                             <option value="--Select--">--Select--</option>
                             <option value="Pending">Pending</option>
@@ -46,20 +46,20 @@
                 </div>
             </form>
         </div>
-    </div>
+  
 </div>
 @section Scripts
 {
     <script>
     var message = document.getElementById('myMessage').getAttribute('data-message');
          // Output: Hello, world!
-        if (message == "Status is added successfully")
+        if (message == "Status is added successfully") 
         {
-            alert(message);
+            toaster.success(message);
         }
         else
         {
-            alert(message);
+            toastr.error(message);
         }
         document.getElementById("StatusName").value = "";
         document.getElementById("StatusType").value = "--Select--";

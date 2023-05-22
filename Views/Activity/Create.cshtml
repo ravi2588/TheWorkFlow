@@ -7,20 +7,20 @@
     var errorMessage = TempData["ErrorMessage"] as string;
 }
 <div class="Container">
-    <div class="card">
+    <div class="card" style="max-width: 500px;">
         <div class="card-header">
-            <div class="card-title ">Create Activity</div>
+            <label class="card-title ">Activity Master</label>
 
         </div>
-        <form asp-action="Create" asp-controller="Status">
+        <form asp-action="Create" asp-controller="Activity">
             <div class="card-body">
                 <div class="form-group">
                     <label >Activity</label>                  
-                    <input class="form-control" asp-for="NameofActivity" placeholder="Activity.." asp-area="" />
+                    <input class="form-control" id="NameofActivity" asp-for="NameofActivity" placeholder="Activity.." asp-area="" />
                 </div>
                 <div class="form-group">
                     <label >Type</label>
-                    <select asp-for="ActivityType" class="form-control">
+                    <select asp-for="ActivityType" id="ActivityType" class="form-control">
                         <option value="Select">--Select--</option>
                         <option value="File">File</option>
                         <option value="HBL">HBL</option>
@@ -29,7 +29,7 @@
                 <div class="form-group">
                     <label >Activity</label>
                     
-                    <select asp-for="Source" class="form-control">
+                    <select asp-for="Source" id="Source" class="form-control">
                         <option value="Select">--Select--</option>
                         <option value="Upload">Upload</option>
                         <option value="Adhoc">Adhoc</option>
@@ -41,22 +41,21 @@
                 <div class="">
                     @if (!string.IsNullOrEmpty(successMessage))
                     {
-                        <div class="success-message" id="myMessage" data-message="@successMessage" style="color:green">
+                        <div class="success-message" id="myMessage" data-message="@successMessage" style="color:green" hidden>
                             @successMessage
                         </div>
                     }
 
                     @if (!string.IsNullOrEmpty(errorMessage))
                     {
-                        <div class="error-message" id="myMessage" data-message="@errorMessage" style="color:red">
+                        <div class="error-message" id="myMessage" data-message="@errorMessage" style="color:red" hidden>
                             @errorMessage
                         </div>
                     }
                 </div>
             </div>
         </form>
-        <div class="card-footer">
-        </div>
+        
     </div>
 
 </div>
@@ -65,24 +64,24 @@
     <script>
     var message = document.getElementById('myMessage').getAttribute('data-message');
          // Output: Hello, world!
-        if (message == "Status is added successfully")
-        {
-            alert(message);
-            toastr.sucess(message);
+        if (message == "Activity is added successfully") {
+            
+            toastr.success(message);
             setTimeout(function () {
                 toastr.clear();
             }, 5000);
         }
         else
         {
-            alert(message);
+           
             toastr.error(message);
             setTimeout(function () {
                 toastr.clear();
             }, 5000);
         }
-        document.getElementById("StatusName").value = "";
-        document.getElementById("StatusType").value = "--Select--";
+        document.getElementById("NameofActivity").value = "";
+        document.getElementById("ActivityType").value = "Select";
+        document.getElementById("Source").value = "Select";
        
     </script>
     
